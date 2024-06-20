@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
 
 import os
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -26,18 +27,49 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 #data.txt
 directory = '/Users/linusgao/Documents/Python/100-Days-Of-Python/Day 29/password-manager-start'
-print(os.listdir())
-def writeToFile(websiteInfo, emailInfo, passwordInfo):
-    with open('data.txt', 'a') as file:
-        file.write(f"{websiteInfo} | {emailInfo} | {passwordInfo}\n")
-        websiteEntry.delete(0, END)
-        passwordEntry.delete(0, END)
+
+def findPassword():
+    websiteInfo = websiteEntry.get()
+    with open('data.json', 'r') as file:
+        try:
+            data = json.load(file)
+            print(data)
+            print(data.keys())
+            
+            if websiteInfo in data.keys():
+                emailInfo = data[websiteInfo]["email"]
+                passwordInfo = data[websiteInfo]["password"]
+                messagebox.showinfo(title="Search Successful", message=f"{websiteInfo}\nEmail: {emailInfo}"
+                                f"\nPassword: {passwordInfo}\n")
+            else:
+                messagebox.showinfo(title="No Search Found", message="No details for the website exists")
+        except (FileNotFoundError, json.JSONDecodeError):
+            messagebox.showinfo(title="File not found", message="No Data File Found")
+
+def writeToFile(newData):
+        try:
+            with open('data.json', 'r') as file:
+            # Ensure the file exists and handle reading and updating data
+                data = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {}
+         # Updating old data with new data
+        data.update(newData)
+        with open("data.json", "w") as file:
+            #Saving updated data
+            json.dump(data, file, indent=4)
+            websiteEntry.delete(0, END)
+            passwordEntry.delete(0, END)
 
 entries = os.listdir(directory)
 def save_to_file(): 
     websiteInfo = websiteEntry.get()
     emailInfo = emailEntry.get()
     passwordInfo = passwordEntry.get()
+    newData = {websiteInfo: {
+        "email": emailInfo,
+        "password": passwordInfo
+    }}
     
     if len(websiteInfo) == 0 or len(passwordInfo) == 0:
         messagebox.showinfo(title="Invalid Information", message="Please do not leave anything blank")
@@ -45,12 +77,7 @@ def save_to_file():
         confirm = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {emailInfo}"
                             f"\nPassword: {passwordInfo} \nIs it ok to save?")
         if confirm:
-            file_path = os.path.join(directory, 'data.txt')
-            if os.path.isfile(file_path):
-                print("File exists, appending data.")
-            else:
-                print("File does not exist, creating and writing data.")
-            writeToFile(websiteInfo, emailInfo, passwordInfo)
+            writeToFile(newData)
                     
                     
     
@@ -71,9 +98,12 @@ canvas.grid(row=0, column=1)
 #Website
 website = Label(window, text="Website:")
 website.grid(row=1, column=0)
-websiteEntry = Entry(window, width=35)
+websiteEntry = Entry(window, width=21)
 websiteEntry.grid(row=1, column=1, columnspan=2, sticky="w")
 website.focus()
+
+searchEmail = Button(window, text="Search", command=findPassword)
+searchEmail.grid(row=1, column=2, sticky="w")
 
 #Email
 email = Label(window, text="Email/Username:")
