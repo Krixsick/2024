@@ -10,6 +10,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: #e7f0dc;
+  flex-direction: column;
 }
 
 /* Navigation bar */
@@ -22,11 +23,7 @@ body {
   align-items: center;
 }
 
-#button1 {
-  background-color: #597445;
-}
-
-#button3 {
+.button3 {
   flex-basis: 100px;
   margin-left: 200px;
   margin-right: 50px; /* Adjust margin as needed */
@@ -40,6 +37,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px;
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .sub-titles {
@@ -56,4 +57,124 @@ body {
   border: none;
 }
 
+.reset-button {
+  background-color: #658147;
+  cursor: pointer;
+  border: none;
+}
+
 /*Body of the website */
+.main {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.box {
+  flex-basis: 50%;
+  display: flex;
+  height: 100%;
+  border: 5px solid black;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/*Images */
+.choiceImage {
+  width: 300px;
+  height: 300px;
+  margin: 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+.win-screen,
+.lose-screen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.font {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.choice {
+  padding: 5px 20px;
+  background-color: #729762;
+  font-size: 15px;
+  color: white;
+}
+
+.choice:hover {
+  background: linear-gradient(
+    90deg,
+    #08ff08,
+    #50e3fc,
+    #bc13fe,
+    #03a9f4,
+    #0ff0fc
+  );
+  background-size: 500%;
+  z-index: 1;
+  animation: blink 7s Linear infinite;
+}
+
+@keyframes blink {
+  from {
+    background-position: 0%;
+  }
+  to {
+    background-position: 500%;
+  }
+}
+
+.choice::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 40px;
+  opacity: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+
+  background-color: #e7f0dc;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+/*This makes the background fuzzy and not clear */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}

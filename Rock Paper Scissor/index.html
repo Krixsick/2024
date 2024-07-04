@@ -4,19 +4,71 @@
     <meta charset="UTF-8" />
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="index.css" />
+    <script src="gamefunction.js" defer></script>
   </head>
   <body>
     <div class="background">
       <div class="navigation-bar">
-        <div class="icon" , id="button1"></div>
-        <div class="icon" ,><p class="sub-titles">Rock Paper Scissors</p></div>
-        <div class="icon" , id="button3">
-          <button class="sub-titles subtitle-button">RULES</button>
+        <div class="icon"><button class="sub-titles reset-button">RESET</button></div>
+        <div class="icon"><p class="sub-titles">Rock Paper Scissors</p></div>
+        <div class="icon button">
+          <button class="sub-titles subtitle-button show-modal">RULES</button>
         </div>
       </div>
+      <div class="modal hidden">
+        <button class="close-modal">&times;</button>
+        <h1>RULES</h1>
+        <p>
+          You are "Player One". Please select a move you want to choose at the bottom left of your screen.
+          Once you have selected a move, press confirm if you are for certain and the bot will randomly make a move.
+          Whoever reaches 20 points wins.
+        </p>
+      </div>
+      <div class="overlay hidden"></div>
+  
       <div class="main">
-        <div class="box"></div>
-        <div class="box"></div>
+        <div class="box player-one-box">
+          <div class="image-container">
+            <img
+              class="choiceImage"
+              id="playerOneChoiceImg"
+              src=""
+              alt="Player one's image"
+            />
+          </div>
+          <div class="scoreContainer">
+            <p class="score playerOneScore font">Score: <span id="playerOneScore">0</span></p>
+            <p class=font>Player 1</p>
+          </div>
+          <div class="choiceContainer">
+            <button class="choice rock">Rock</button>
+            <button class="choice paper">Paper</button>
+            <button class="choice scissor">Scissor</button>
+            <button class="choice confirm">Confirm</button>
+          </div>
+        </div>
+        <div class="box player-two-box">
+            <div class="image-container">
+                <img
+                  class="choiceImage"
+                  id="playerTwoChoiceImg"
+                  src=""
+                  alt="Player two's image"
+                />
+              </div>
+              <div class="scoreContainer">
+                <p class="score playerTwoScore font">Score: <span id="playerTwoScore">0</span></p>
+                <p class="font">Player 2</p>
+              </div>
+              <div class="choiceContainer"></div>
+            </div>
+            <div class="win-screen hidden" id="winScreen">
+              <p>You Win!</p>
+            </div>
+            <div class="lose-screen hidden" id="loseScreen">
+              <p>You Lose!</p>
+            </div>
+        </div>
       </div>
     </div>
   </body>
